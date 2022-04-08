@@ -21,27 +21,45 @@ namespace Core
 		}
 		public class Metadata
 		{
+			// TODO: ret type?
+			// TODO: jp signature?
+			public string DeclaredInTypeName { get; }
+			public string DeclaredInTypeFullName { get; }
 			public string Name { get; }
-			public Type JoinPointType { get; }
-			public System.Type DeclaredIn { get; }
+			public JoinpointType JPType { get; }
 			public Parameter[] Parameters { get; }
 			public bool ContainsParameters => Parameters != null && Parameters.Length != 0;
-			public System.Type ReturnType { get; }
-			public MemberInfo MemberInfo { get; }
+
+			// TODO: кеширование
+			public Type GetDeclaredType()
+			{
+				return Type.GetType(DeclaredInTypeFullName);
+			}
+			public MemberInfo GetJoinpointInfo() // TODO: Уверен ли ты в том, что тебе нужен именно MemberInfo, но не MethodBase?
+			{
+				return GetDeclaredType().GetMember(Name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)[0]; // TODO: очень не нравится
+			}
+			public ParameterInfo[] GetParametersInfo()
+			{
+				return GetJoinpointInfo() is MethodBase method 
+					? method.GetParameters() 
+					: Array.Empty<ParameterInfo>();
+			}
 
 			public class Parameter
 			{
 				public string Name { get; }
-				public System.Type Type { get; }
-				public ParameterInfo ParameterInfo { get; }
+				public string TypeName { get; }
+				public int Position { get; }
 			}
-			public enum Type : byte
+			public enum JoinpointType : byte
 			{
-				Getter,
-				Setter,
+				PropertyGetter,
+				PropertySetter,
+				EventAdd,
+				EventRemove,
 				Method,
 				Constructor
-				// TODO: etc
 			}
 		}
 	}
