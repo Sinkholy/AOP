@@ -5,8 +5,8 @@ namespace Core
 {
 	public class JoinPoint
 	{
-		Context JPContext { get; }
-		Metadata JPMetadata { get; }
+		public Context JPContext { get; }
+		public Metadata JPMetadata { get; }
 
 		public class Context
 		{
@@ -21,21 +21,21 @@ namespace Core
 		}
 		public class Metadata
 		{
-			string Name { get; }
-			Type JoinPointType { get; }
-			System.Type DeclaredIn { get; }
-			Parameter[] Parameters { get; }
-			bool ContainsParameters => Parameters != null && Parameters.Length != 0;
-			System.Type ReturnType { get; }
-			MemberInfo MemberInfo { get; }
+			public string Name { get; }
+			public Type JoinPointType { get; }
+			public System.Type DeclaredIn { get; }
+			public Parameter[] Parameters { get; }
+			public bool ContainsParameters => Parameters != null && Parameters.Length != 0;
+			public System.Type ReturnType { get; }
+			public MemberInfo MemberInfo { get; }
 
 			public class Parameter
 			{
-				string Name { get; }
-				System.Type Type { get; }
-				ParameterInfo ParameterInfo { get; }
+				public string Name { get; }
+				public System.Type Type { get; }
+				public ParameterInfo ParameterInfo { get; }
 			}
-			enum Type : byte
+			public enum Type : byte
 			{
 				Getter,
 				Setter,
