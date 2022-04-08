@@ -5,11 +5,22 @@ namespace Core
 {
 	public class JoinPoint
 	{
+		internal JoinPoint(Metadata metadata, Context context)
+		{
+			JPMetadata = metadata;
+			JPContext = context;
+		}
+
 		public Context JPContext { get; }
 		public Metadata JPMetadata { get; }
 
 		public class Context
 		{
+			internal Context(Argument[] arguments)
+			{
+				Arguments = arguments;
+			}
+
 			// TODO: решить вопрос с тем нужно ли вообще передавать переменные.
 			public Argument[] Arguments { get; }
 
@@ -21,6 +32,19 @@ namespace Core
 		}
 		public class Metadata
 		{
+			internal Metadata(string declaredInTypeName, 
+							string declaredInTypeFullName,
+							string name, 
+							JoinpointType jPType, 
+							Parameter[] parameters)
+			{
+				DeclaredInTypeName = declaredInTypeName;
+				DeclaredInTypeFullName = declaredInTypeFullName;
+				Name = name;
+				JPType = jPType;
+				Parameters = parameters;
+			}
+
 			// TODO: ret type?
 			// TODO: jp signature?
 			public string DeclaredInTypeName { get; }
@@ -48,6 +72,13 @@ namespace Core
 
 			public class Parameter
 			{
+				internal Parameter(string name, string typeName, int position)
+				{
+					Name = name;
+					TypeName = typeName;
+					Position = position;
+				}
+
 				public string Name { get; }
 				public string TypeName { get; }
 				public int Position { get; }
