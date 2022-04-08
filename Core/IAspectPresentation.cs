@@ -2,17 +2,17 @@
 {
 	public interface IAspectPresentation
 	{
-		AspectBase Aspect { get; }
+		Aspect Aspect { get; }
 		IPointcutPresentation[] Pointcuts { get; }
 
 		public interface IPointcutPresentation
 		{
-			AspectBase.PointcutBase Pointcut { get; }
+			Aspect.Pointcut Pointcut { get; }
 			IAdvicePresentationBase[] Advices { get; }
 		}
 		public interface IAdvicePresentationBase
 		{
-			AspectBase.AdviceBase Advice { get; }
+			Aspect.Advice Advice { get; }
 		}
 	}
 }
