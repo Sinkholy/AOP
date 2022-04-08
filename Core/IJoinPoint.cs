@@ -3,51 +3,34 @@ using System.Reflection;
 
 namespace Core
 {
-	public interface IJoinPoint
+	public class JoinPoint
 	{
-		IContext Context { get; }
-		IMetadata Metadata { get; }
+		Context JPContext { get; }
+		Metadata JPMetadata { get; }
 
-		public interface IContext
+		public class Context
 		{
-			IArgument[] Arguments { get; }
-			IVariable[] Variables { get; }
+			// TODO: решить вопрос с тем нужно ли вообще передавать переменные.
+			public Argument[] Arguments { get; }
 
-			public interface IEntity
+			public class Argument
 			{
-				string Name { get; }
-				Type Type { get; }
-				object Value { get; }
-			}
-			public interface IVariable : IEntity
-			{
-			}
-			public interface IArgument : IEntity
-			{
+				public Metadata.Parameter Parameter { get; }
+				public object? Value { get; }
 			}
 		}
-		public interface IMetadata
+		public class Metadata
 		{
 			string Name { get; }
 			Type JoinPointType { get; }
 			System.Type DeclaredIn { get; }
-			IParameter[] Parameters { get; }
+			Parameter[] Parameters { get; }
 			bool ContainsParameters => Parameters != null && Parameters.Length != 0;
 			System.Type ReturnType { get; }
 			MemberInfo MemberInfo { get; }
 
-			interface IParameter
+			public class Parameter
 			{
-				// TODO: нужен ли вообще этот интерфейс?
-				// Сейчас я использую его как некий shortcut для ParameterInfo
-				// т.к. Name и Type просто обращаются к ParameterInfo
-				// В принципе это выглядит более "user friendly"
-				// Но это так же может усложнять структуру
-				// Нужно решить:
-				// - Оставить всё какесть
-				// - Избавиться от интерфейса и использовать ParameterInfo напрямую
-				// - Избавиться от ParameterInfo и добавлять сущности по необходимости
-				// Так же всё вышесказанное вполне относится к IMetadata ^^^
 				string Name { get; }
 				System.Type Type { get; }
 				ParameterInfo ParameterInfo { get; }
